@@ -1,5 +1,5 @@
 const express = require('express');
-const bcrypt = require('bcrypt-nodejs');
+// const bcrypt = require('bcrypt-nodejs');
 const cors = require('cors');
 
 const app = express();
@@ -46,7 +46,7 @@ app.get('/', (req, res) => {
 app.post('/signin', (req, res) => {
     if (req.body.email === database.users[0].email &&
         req.body.password === database.users[0].password) {
-            res.json('success');
+            res.json(database.users[0]);
     } else {
         res.status(400).json('error logging in');
     } 
@@ -68,7 +68,7 @@ app.post('/register', (req, res) => {
 
 app.get('/profile/:id', (req, res) => {
     const { id } = req.params;
-    const found = false;
+    let found = false;
     database.users.forEach( user => {
         if (user.id === id) {
             found = true;
@@ -82,8 +82,8 @@ app.get('/profile/:id', (req, res) => {
 
 app.put('/image', (req, res) => {
     const { id } = req.body;
-    const found = false;
-    database.users.forEach( user => {
+    let found = false;
+    database.users.forEach(user => {
         if (user.id === id) {
             found = true;
             user.entries++;
