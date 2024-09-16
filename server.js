@@ -1,10 +1,13 @@
 const express = require('express');
+const bcrypt = require('bcrypt-nodejs');
+const cors = require('cors');
 
 const app = express();
 
 // essential to read the data
 app.use(express.urlencoded({extended: false}));
 app.use(express.json());
+app.use(cors());
 
 const database = {
     users: [
@@ -24,8 +27,15 @@ const database = {
             entries: 0,
             joined: new Date()
         }
-    ] 
-    
+    ],
+
+    login: [
+        { 
+            id: '987',
+            has: '',
+            email: 'john@gmail.com'
+        }
+    ]
 }
 
 
@@ -87,21 +97,20 @@ app.put('/image', (req, res) => {
 })
 
 
+// bcrypt.hash(password, null, null, function(err, hash) {
+//     console.log(hash);
+// });
+// // Load hash from your password DB.
+// bcrypt.compare("bacon", hash, function(err, res) {
+//     // res == true
+// });
+// bcrypt.compare("veggies", hash, function(err, res) {
+//     // res = false
+// });
+
+
+
 app.listen(3000, () => {
     console.log('app is running on port 3000');
 })
 
-
-
-
-
-/*
-
-/ --> res = this is working
-/signin --> POST = success/fail
-/register --> POST = user
-/profile/:userId --> GET = user
-/image --> PUT  --> user
-
-
-*/
